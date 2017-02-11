@@ -13,13 +13,15 @@ To make the confusion complete, there are two different REST APIs available both
 - graph.windows.net 
 - graph.microsoft.com
 
-Recommendations:
-If you have to create an AAD application and service principal you shouldn't use the MSonline (New-MsolServicePrincipal) nor AzureRm.Resources (New-AzureRmADServicePrincipal). Both of these cmdlets will create some kind of applications in the background but:
-The New-MsolServicePrincipal creates a hidden application and hidden service principal (you won't see them in neither the old nor the new Portal), similar to Microsoft internal apps (it also sets servicePrincipalType=Legacy)
-The New-AzureRmADServicePrincipal creates an application for you and then creates the service principal. The application is visible in the Portal, but the service principal is not. This is because the SP is missing the "WindowsAzureActiveDirectoryIntegratedApp" tag. 
-However, if you already created an AAD application using the New-AzureRmADServicePrincipal cmdlet and you want to see the SP in the Portal (Enterprise Application list), you can fix it by setting the necessary tag:
+If you have to create an AAD application, you **shouldn't** use the```New-MsolServicePrincipal``` (*MSonline*) nor the ```New-AzureRmADServicePrincipal```(*AzureRm.Resources*) cmdlet. 
+Both of these cmdlets will create some kind of applications in the background but:
+- The ```New-MsolServicePrincipal``` creates a *hidden application* and *hidden service principal* (you won't be able to see them in neither the old nor the new Portal), similar to Microsoft internal apps (it also sets ```servicePrincipalType=Legacy```)
+- The ```New-AzureRmADServicePrincipal``` creates an application for you and then creates the service principal. The application is visible in the Portal, but the service principal is not. This is because the principal is missing the ```WindowsAzureActiveDirectoryIntegratedApp``` tag. 
+However, if you already created an AAD application using the ```New-AzureRmADServicePrincipal``` cmdlet and you want to see the service principal in the Portal (Enterprise Application list), you can fix it by setting the necessary tag:
+```powershell
 New-AzureADServicePrincipal -Tags @("WindowsAzureActiveDirectoryIntegratedApp") -AppId <APPID>
-Fortunately, the New-AzureADServicePrincipal does not allow you to create it without providing an application id. 
+```
+Fortunately, the ```New-AzureADServicePrincipal``` does not allow you to create it without providing an application id. 
 
 
 Note: In the portal, the application represents the actual application templates whereas the enterprise applications represent the service principals.
