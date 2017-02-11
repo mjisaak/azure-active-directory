@@ -17,6 +17,7 @@ If you have to create an AAD application, you **shouldn't** use the```New-MsolSe
 Both of these cmdlets will create some kind of applications in the background but:
 - The ```New-MsolServicePrincipal``` creates a *hidden application* and *hidden service principal* (you won't be able to see them in neither the old nor the new Portal), similar to Microsoft internal apps (it also sets ```servicePrincipalType=Legacy```)
 - The ```New-AzureRmADServicePrincipal``` creates an application for you and then creates the service principal. The application is visible in the Portal, but the service principal is not. This is because the principal is missing the ```WindowsAzureActiveDirectoryIntegratedApp``` tag. 
+
 However, if you already created an AAD application using the ```New-AzureRmADServicePrincipal``` cmdlet and you want to see the service principal in the Portal (Enterprise Application list), you can fix it by setting the necessary tag:
 ```powershell
 New-AzureADServicePrincipal -Tags @("WindowsAzureActiveDirectoryIntegratedApp") -AppId <APPID>
