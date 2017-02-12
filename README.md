@@ -10,10 +10,10 @@ Then there is the [AzureAD](https://docs.microsoft.com/en-us/powershell/azuread/
 Both, the *AzureAD* and the *AzureRM.Resources* module are using the **Graph API** (REST) whereas the *MSOnline* module is using a SOAP based **legacy** API (https://provisioningapi.microsoftonline.com/provisioningwebservice.svc).
 
 If you have to choose a module you should know that MSOnline will probably get [deprecated soon](https://docs.microsoft.com/en-us/powershell/msonline/). 
-### Graph API
-To make the confusion complete, there are two different REST APIs available both known as Microsoft Graph API.
+### REST
+To make the confusion complete, there are also two different REST APIs available both known as Microsoft *Graph API*.
 - graph.windows.net (Azure AD Graph API) 
-- graph.microsoft.com
+- graph.microsoft.com (Microsoft Graph - a unifed API - *"One endpoint to rule them all"*)
 
 A good starting point for the Azure AD Graph API is the [quickstart site](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-graph-api-quickstart), the [list of common queries](https://msdn.microsoft.com/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-supported-queries-filters-and-paging-options#CommonQueries) and of course the [Graph Explorer](https://graphexplorer.cloudapp.net/)
 
