@@ -11,7 +11,7 @@ Both, the *AzureAD* and the *AzureRM.Resources* module are using the **Graph API
 
 If you have to choose a module you should know that MSOnline will probably get [deprecated soon](https://docs.microsoft.com/en-us/powershell/msonline/). 
 ### REST
-To make the confusion complete, there are also two different REST APIs available both known as Microsoft *Graph API*.
+To make the confusion complete, there are also two different REST APIs available both known as Microsoft **Graph**.
 - graph.windows.net (Azure AD Graph API) 
 - graph.microsoft.com (Microsoft Graph - a unifed API - *"One endpoint to rule them all"*)
 
