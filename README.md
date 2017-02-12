@@ -2,16 +2,20 @@
 This readme provides some information about Azure Active Directory for developers. 
 
 ## Choosing an API
-There are many ways to programmatically manage the Azure Active Directory. Within PowerShell there is the [MSOnline](https://docs.microsoft.com/en-us/powershell/msonline/) module which was the *first* available AAD PowerShell module.
+There are many ways to programmatically manage the Azure Active Directory. 
+### PowerShell
+Within PowerShell there is the [MSOnline](https://docs.microsoft.com/en-us/powershell/msonline/) module which was the *first* available AAD PowerShell module.
 Then there is the [AzureAD](https://docs.microsoft.com/en-us/powershell/azuread/v2/azureactivedirectory) module which basically is  *version 2* of the AAD modules. And finally there is the [AzureRM.Resources](https://www.powershellgallery.com/packages/AzureRM.Resources) module which also contains some cmdlets to manage an AAD. 
 
 Both, the *AzureAD* and the *AzureRM.Resources* module are using the **Graph API** (REST) whereas the *MSOnline* module is using a SOAP based **legacy** API (https://provisioningapi.microsoftonline.com/provisioningwebservice.svc).
 
 If you have to choose a module you should know that MSOnline will probably get [deprecated soon](https://docs.microsoft.com/en-us/powershell/msonline/). 
-
+### Graph API
 To make the confusion complete, there are two different REST APIs available both known as Microsoft Graph API.
-- graph.windows.net 
+- graph.windows.net (Azure AD Graph API) 
 - graph.microsoft.com
+
+A good starting point for the Azure AD Graph API is the [quickstart site](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-graph-api-quickstart), the [list of common queries](https://msdn.microsoft.com/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-supported-queries-filters-and-paging-options#CommonQueries) and of course the [Graph Explorer](https://graphexplorer.cloudapp.net/)
 
 If you have to create an AAD application, you **shouldn't** use the```New-MsolServicePrincipal``` (*MSonline*) nor the ```New-AzureRmADServicePrincipal```(*AzureRm.Resources*) cmdlet. 
 Both of these cmdlets will create some kind of applications in the background but:
