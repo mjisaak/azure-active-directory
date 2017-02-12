@@ -26,7 +26,9 @@ To make the confusion complete, there are also two different REST APIs available
 - graph.windows.net (Azure AD Graph API) 
 - graph.microsoft.com (Microsoft Graph - a unifed API - *"One endpoint to rule them all"*)
 
-A good starting point for the Azure AD Graph API is the [quickstart site](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-graph-api-quickstart), the [list of common queries](https://msdn.microsoft.com/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-supported-queries-filters-and-paging-options#CommonQueries) and of course the [Graph Explorer](https://graphexplorer.cloudapp.net/).
+A good starting point for the Azure AD Graph API is the [quickstart site](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-graph-api-quickstart), the [list of common queries](https://msdn.microsoft.com/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-supported-queries-filters-and-paging-options#CommonQueries) and of course the [Graph Explorer](https://graphexplorer.cloudapp.net/). Both APIs supports Odata but the Azure AD Graph API doesn't support ```$select``` out of the box:
+
+> The ability to use the $select query option to define a projection in a data service query is disabled. To enable this functionality, > set the DataServiceConfiguration. AcceptProjectionRequests property to true.
 
 
 
