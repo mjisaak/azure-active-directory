@@ -36,4 +36,4 @@ A good starting point for the Azure AD Graph API is the [quickstart site](https:
 
 
 Note: In the portal, the application represents the actual application templates whereas the enterprise applications represent the service principals.
-![img](.\resources\aad-applicationandsp.png")
+![AAD service principal and application template](https://github.com/mjisaak/azure-active-directory/blob/master/resources/aad-applicationandsp.png)
