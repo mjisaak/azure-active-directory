@@ -35,5 +35,6 @@ A good starting point for the Azure AD Graph API is the [quickstart site](https:
 > https://graph.windows.net/mytenant.onmicrosoft.com/users?$filter=userPrincipalName eq 'myuser@mytenant.onmicrosoft.com'&api-version=1.6
 
 
-Note: In the portal, the application represents the actual application templates whereas the enterprise applications represent the service principals.
+**Note:** In the portal, the application represents the actual application templates whereas the enterprise applications represent the service principals:
+
 ![AAD service principal and application template](https://github.com/mjisaak/azure-active-directory/blob/master/resources/aad-applicationandsp.png)
