@@ -38,3 +38,14 @@ A good starting point for the Azure AD Graph API is the [quickstart site](https:
 **Note:** In the portal, the application represents the actual application templates whereas the enterprise applications represent the service principals:
 
 ![AAD service principal and application template](https://github.com/mjisaak/azure-active-directory/blob/master/resources/aad-applicationandsp.png)
+
+## Disable user browsing
+In Azure AD, Users and groups are created in a flat structure without OU and GPO. By default, every user can browse other users and groups. Fortunately there is a flag that you can set using the MSOnline module to disable user browsing for "normal" users:
+
+```powershell
+Connect-MsolService
+Set-MsolCompanySettings -UsersPermissionToReadOtherUsersEnabled $false
+```
+
+***Tip:***
+> For the Azure German Cloud (MCD) you won't be able to connect with the default `Connect-MsolService` cmdlet. There is a MSI ( [AdministrationConfig-V1.1.166.0-GA.msi](http://connect.microsoft.com/site1164/Downloads/DownloadDetails.aspx?DownloadID=59185)) which extends the cmdlet with a `-AzureEnvironment` parameter. After you installed the MSI you can authenticate against MSOnline using `Connect-MsolService -AzureEnvironment AzureGermanyCloud`
