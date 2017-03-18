@@ -159,7 +159,7 @@ ef54d2bf-783f-4e0f-bca1-3210c0444d99 Read and write calendars in all mailboxes
 ```
 
 # Authentication: Secured native app -> Secured web API
-Based on this [article](https://github.com/mjisaak/active-directory-dotnet-webapi-onbehalfof) the following snippets shows how to secure a .net core native application and call an secured asp.net core web API:
+Based on this [article](https://github.com/mjisaak/active-directory-dotnet-webapi-onbehalfof) the following snippets shows how to secure a .net core native application and call a secured asp.net core web API using the obtained token:
 
 Example values:
 ```
