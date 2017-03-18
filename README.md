@@ -157,3 +157,47 @@ df021288-bdef-4463-88db-98f22de89214 Read all users' full profiles
 e2a3a72e-5f79-4c64-b1b1-878b674786c9 Read and write mail in all mailboxes                  
 ef54d2bf-783f-4e0f-bca1-3210c0444d99 Read and write calendars in all mailboxes
 ```
+
+# Authentication Scenario: Secured native app -> Secured web API
+Based on this [article](https://github.com/mjisaak/active-directory-dotnet-webapi-onbehalfof).
+
+Example values:
+```
+WebAPI App Id   e8114585-7fba-47bc-bc4f-5c2a4a52c2c1
+Native App Id   acc8d1ec-9f89-4b01-9134-58c54d50cb9a
+Tenant          mytenant.onmicrosoft.com
+```
+
+
+## Web API:
+Startup.cs Configure:
+```csharp
+app.UseJwtBearerAuthentication(new JwtBearerOptions
+{
+    Authority = @"https://login.microsoftonline.com/" + "mytenant.onmicrosoft.com",
+    Audience = "e8114585-7fba-47bc-bc4f-5c2a4a52c2c1" // eigene APP ID
+});
+```
+## Native application
+E. g. console.
+```csharp
+static void Main(string[] args)
+{
+    var authority = @"https://login.microsoftonline.com/mytenant.onmicrosoft.com";
+    var resource = "e8114585-7fba-47bc-bc4f-5c2a4a52c2c1"; // WebAPI AppId
+    var clientId = "acc8d1ec-9f89-4b01-9134-58c54d50cb9a";  // Native AppId (this program)
+    var redirectUri = @"https://www.mytenant.de";
+
+    var authContext = new AuthenticationContext(authority);
+
+    var authenticationResult = authContext.AcquireTokenAsync(
+        resource, 
+        clientId, 
+        new Uri(redirectUri), 
+        new PlatformParameters(PromptBehavior.Auto)).GetAwaiter().GetResult();
+
+    var httpClient = new HttpClient();
+    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authenticationResult.AccessToken);
+    HttpResponseMessage response2 = httpClient.GetAsync(@"http://localhost:65098/api/" + "values/1").GetAwaiter().GetResult() ;
+}
+```
