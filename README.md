@@ -175,7 +175,7 @@ Startup.cs Configure:
 app.UseJwtBearerAuthentication(new JwtBearerOptions
 {
     Authority = @"https://login.microsoftonline.com/" + "mytenant.onmicrosoft.com",
-    Audience = "e8114585-7fba-47bc-bc4f-5c2a4a52c2c1" // eigene APP ID
+    Audience = "e8114585-7fba-47bc-bc4f-5c2a4a52c2c1" // WebAPI AppId (own)
 });
 ```
 ## Native application
@@ -185,7 +185,7 @@ static void Main(string[] args)
 {
     var authority = @"https://login.microsoftonline.com/mytenant.onmicrosoft.com";
     var resource = "e8114585-7fba-47bc-bc4f-5c2a4a52c2c1"; // WebAPI AppId
-    var clientId = "acc8d1ec-9f89-4b01-9134-58c54d50cb9a";  // Native AppId (this program)
+    var clientId = "acc8d1ec-9f89-4b01-9134-58c54d50cb9a";  // Native AppId (own)
     var redirectUri = @"https://www.mytenant.de";
 
     var authContext = new AuthenticationContext(authority);
