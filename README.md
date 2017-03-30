@@ -201,3 +201,19 @@ static void Main(string[] args)
     HttpResponseMessage response2 = httpClient.GetAsync(@"http://localhost:65098/api/" + "values/1").GetAwaiter().GetResult() ;
 }
 ```
+
+# Increase AccessToken Lifetime
+Based on [this article](https://docs.microsoft.com/en-us/azure/active-directory/active-directory-configurable-token-lifetimes).
+```powershell
+Import-Module AzureADPreview -Force
+Connect-AzureAd
+
+New-AzureADPolicy `
+-Definition @('{"TokenLifetimePolicy":{"Version":1, "AccessTokenLifetime":"23:00:00"}}') `
+-DisplayName "IncreasedAccessTokenLT" `
+-IsOrganizationDefault $true `
+-Type "TokenLifetimePolicy"
+
+# verify:
+Get-AzureADPolicy
+```
