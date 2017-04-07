@@ -219,7 +219,7 @@ Get-AzureADPolicy
 ```
 
 # Retrieve Access Token using the Authorization Code Flow
-PowerShell snippet to obtain an AAD access token, id token and refresh token using the [OAuth 2.0 authorization code flow}(https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-protocols-oauth-code):
+PowerShell snippet to obtain an AAD access token, id token and refresh token using the [OAuth 2.0 authorization code flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-protocols-oauth-code):
 
 ```powershell
 function Get-AuthorizationCode
