@@ -298,3 +298,6 @@ $authCode = Get-AuthorizationCode -Tenant '<tenant>' -ClientId '<client id>'  -R
 $token = Get-AccessToken -Tenant '<tenant>' -ClientId '<client id>' -ClientSecret '<client secret>' -RedirectUri '<redirect uri>' -AuthorizationCode $authCode
 ```
 
+Receive an Access Token using the resource owner password flow
+
+
