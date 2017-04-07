@@ -298,6 +298,49 @@ $authCode = Get-AuthorizationCode -Tenant '<tenant>' -ClientId '<client id>'  -R
 $token = Get-AccessToken -Tenant '<tenant>' -ClientId '<client id>' -ClientSecret '<client secret>' -RedirectUri '<redirect uri>' -AuthorizationCode $authCode
 ```
 
-Receive an Access Token using the resource owner password flow
+# Receive an Access Token using the resource owner password flow
+PowerShell snippet to obtain an AAD access token using the OAuth 2.0 resource owner password flow:
+```powershell
+function Get-AccessTokenByPasswordFlow
+{
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string]$Username,
+         
+        [Parameter(Mandatory=$true, Position=1)]
+        [string]$Password, 
 
+        [Parameter(Mandatory=$true, Position=2)]
+        [string]$Tenant,
+
+        [Parameter(Mandatory=$true, Position=3)]
+        [string]$ClientId,
+
+        [Parameter(Mandatory=$true, Position=4)]
+        [string]$ClientSecret
+    )
+
+    $body = @{
+        grant_type = "password";
+        username = $username;
+        password = $password;
+        scope = 'openid';
+        resource = $clientId;
+        client_id = $clientId;
+        client_secret = $clientSecret;
+    };
+
+    $authorizationHeader = 'Basic {0}';
+    $contentType = 'application/x-www-form-urlencoded';
+    $absoluteUri = "https://login.microsoftonline.com/$Tenant/oauth2/token";
+
+    $credentials = "$($clientId):$($clientSecret)";
+    $encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credentials));
+    $headers = @{ Authorization = $authorizationHeader -f $encodedCredentials};
+
+    $result = Invoke-RestMethod -Uri $absoluteUri -Method Post -Body $body -Headers $headers -ContentType $contentType;
+    $result.access_token
+}
+```
 
