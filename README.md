@@ -217,3 +217,84 @@ New-AzureADPolicy `
 # verify:
 Get-AzureADPolicy
 ```
+
+# Retrieve Access Token using the Authorization Code Flow
+PowerShell snippet to obtain an AAD access token, id token and refresh token using the [OAuth 2.0 authorization code flow}(https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-protocols-oauth-code):
+
+```powershell
+function Get-AuthorizationCode
+{
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string]$Tenant,
+
+        [Parameter(Mandatory=$true, Position=1)]
+        [string]$ClientId,
+
+        [Parameter(Mandatory=$true, Position=2)]
+        [string]$RedirectUri
+    )
+    $authorizationRequest = "https://login.microsoftonline.com/$Tenant/oauth2/authorize?response_type=code&client_id=$ClientId&redirect_uri=$RedirectUri"
+ 
+    $internetExplorer = New-Object -ComObject InternetExplorer.Application
+    $internetExplorer.visible = $true
+    $internetExplorer.navigate2($authorizationRequest)
+
+    # workaround: If the user is already sign in we have to refresh the page in order to get redirected.
+    do
+    {
+        Start-Sleep -Milliseconds 100       
+    } 
+    until($internetExplorer.LocationURL)
+    $internetExplorer.Refresh()
+
+    do
+    {
+        Start-Sleep -Seconds 1
+    } 
+    until($internetExplorer.LocationURL -match 'code=([^&]+)')
+    $internetExplorer.Quit()
+    $matches[1]
+}
+
+
+function Get-AccessToken
+{
+    Param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [string]$Tenant,
+
+        [Parameter(Mandatory=$true, Position=1)]
+        [string]$ClientId,
+
+        [Parameter(Mandatory=$true, Position=2)]
+        [string]$ClientSecret,
+
+        [Parameter(Mandatory=$true, Position=3)]
+        [string]$RedirectUri,
+
+        [Parameter(Mandatory=$true, Position=4)]
+        [string]$AuthorizationCode      
+    )
+
+    Add-Type -AssemblyName System.Web
+    $encodedReplyUrl = [System.Web.HttpUtility]::UrlEncode($RedirectUri)
+    $encodedClientSecret = [System.Web.HttpUtility]::UrlEncode($ClientSecret)
+
+    $invokeParameter = @{
+            Body = "grant_type=authorization_code&client_id=$ClientId&code=$AuthorizationCode&redirect_uri=$encodedReplyUrl&client_secret=$encodedClientSecret&resource=$ClientId"
+            Uri = "https://login.microsoftonline.com/$Tenant/oauth2/token"
+            ContentType = "application/x-www-form-urlencoded"
+            Method = 'Post'
+        }
+    Invoke-RestMethod @invokeParameter
+}
+```
+usage:
+```powershell
+$authCode = Get-AuthorizationCode -Tenant '<tenant>' -ClientId '<client id>'  -RedirectUri '<redirect uri>'
+$token = Get-AccessToken -Tenant '<tenant>' -ClientId '<client id>' -ClientSecret '<client secret>' -RedirectUri '<redirect uri>' -AuthorizationCode $authCode
+```
+
